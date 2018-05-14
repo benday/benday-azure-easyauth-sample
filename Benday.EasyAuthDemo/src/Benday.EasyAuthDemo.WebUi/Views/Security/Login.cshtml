@@ -1,0 +1,41 @@
+﻿@model Benday.EasyAuthDemo.WebUi.Models.SecurityLoginModel
+@inject Benday.EasyAuthDemo.WebUi.Security.ISecurityConfiguration _SecurityConfig
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<h3>You're not logged in.  Choose one of the login types below.</h3>
+<hr />
+@if (_SecurityConfig.IsDevelopmentMode())
+{
+    <div class="row">
+        <div class="col-md-8">
+            <h4>FYI, you're running in development mode so only 'Local Development' will work.</h4>
+        </div>
+    </div>
+    <hr />
+}
+<div class="row">
+    <div class="col-md-4">
+        <ul>
+            @foreach (var item in Model.LoginTypes)
+            {
+
+                <li><a href="@item.Value">@item.Key</a></li>
+
+            }
+        </ul>
+    </div>
+</div>
+
+
+
+@*<div>
+        <a asp-action="Index">Back to List</a>
+    </div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
