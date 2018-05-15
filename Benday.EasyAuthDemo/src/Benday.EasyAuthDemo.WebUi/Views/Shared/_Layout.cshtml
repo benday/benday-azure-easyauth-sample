@@ -1,24 +1,4 @@
-﻿@inject Microsoft.Extensions.Configuration.IConfiguration _Configuration
-@inject Benday.EasyAuthDemo.WebUi.Security.IUserInformation _UserInformation
-
-@functions {
-private string GetBuildVersionMessage()
-{
-    var value = _Configuration["MiscSettings:BuildVersionMessage"];
-
-    if (value == null)
-    {
-        return "(not set)";
-    }
-    else
-    {
-        return value;
-    }
-
-
-}
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -37,8 +17,8 @@ private string GetBuildVersionMessage()
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -46,42 +26,20 @@ private string GetBuildVersionMessage()
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand">Azure Easy Auth Security Demo
-                </a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Benday.EasyAuthDemo.WebUi</a>
             </div>
-            <div class="navbar-collapse collapse" id="navbar">
+            <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">Page That Requires Login</a></li>
-                    <li><a asp-area="" asp-controller="SecuritySummary" asp-action="Index">View Claims / Cookies / Headers</a></li>
-
-                    @if (_UserInformation.IsLoggedIn == false)
-                    {
-                        <li class="nav-item"><a asp-area="" asp-controller="Security" asp-action="Login">Login</a></li>
-                    }
-                    else
-                    {
-                        <li class="nav-item"><a asp-area="" asp-controller="Security" asp-action="Logout">Logout</a></li>
-                        <li class="navbar-text"><i>Hi, @_UserInformation.FirstName</i></li>
-                    }
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
             </div>
         </div>
-
-
-
     </nav>
-    
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <div class="row">
-            <div class="col-md-12">
-                <hr />
-                Version:
-                <br /><i>@(GetBuildVersionMessage())</i>
-            </div>
-        </div>
         <footer>
             <p>&copy; 2018 - Benday.EasyAuthDemo.WebUi</p>
         </footer>
