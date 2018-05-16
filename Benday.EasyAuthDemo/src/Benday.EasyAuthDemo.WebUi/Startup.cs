@@ -30,8 +30,8 @@ namespace Benday.EasyAuthDemo.WebUi
 
             services.AddMvc();
 
-            // ConfigureAuthentication(services);
-            // ConfigureAuthorization(services);
+            ConfigureAuthentication(services);
+            ConfigureAuthorization(services);
         }
 
         private void ConfigureAuthentication(IServiceCollection services)
@@ -52,8 +52,8 @@ namespace Benday.EasyAuthDemo.WebUi
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(SecurityConstants.Policy_LoggedInUsingEasyAuth,
-                              policy => policy.Requirements.Add(
-                                  new LoggedInUsingEasyAuthRequirement()));
+                                policy => policy.Requirements.Add(
+                                    new LoggedInUsingEasyAuthRequirement()));
 
                 options.DefaultPolicy = options.GetPolicy(SecurityConstants.Policy_LoggedInUsingEasyAuth);
             });

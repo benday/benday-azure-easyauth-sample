@@ -26,7 +26,7 @@ namespace Benday.EasyAuthDemo.WebUi.Security
             LoggedInUsingEasyAuthRequirement requirement)
         {
             var identityProviderHeader =
-                GetHeaderValue(_Accessor.HttpContext, 
+                GetHeaderValue(_Accessor.HttpContext,
                 SecurityConstants.Claim_X_MsClientPrincipalIdp);
 
             if (identityProviderHeader == null)
