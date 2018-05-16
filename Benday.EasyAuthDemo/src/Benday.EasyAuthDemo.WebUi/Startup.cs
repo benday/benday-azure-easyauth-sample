@@ -30,13 +30,12 @@ namespace Benday.EasyAuthDemo.WebUi
 
             services.AddMvc();
 
-            // ConfigureSecurity(services);
+            // ConfigureAuthentication(services);
+            // ConfigureAuthorization(services);
         }
 
-        private void ConfigureSecurity(IServiceCollection services)
+        private void ConfigureAuthentication(IServiceCollection services)
         {
-            services.AddSingleton<IAuthorizationHandler, LoggedInUsingEasyAuthHandler>();
-
             services.AddAuthentication(
                 CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options =>
@@ -44,6 +43,11 @@ namespace Benday.EasyAuthDemo.WebUi
                         options.LoginPath = new PathString("/Security/Login");
                         options.LogoutPath = new PathString("/Security/Logout");
                     });
+        }
+
+        private void ConfigureAuthorization(IServiceCollection services)
+        {
+            services.AddSingleton<IAuthorizationHandler, LoggedInUsingEasyAuthHandler>();
 
             services.AddAuthorization(options =>
             {
