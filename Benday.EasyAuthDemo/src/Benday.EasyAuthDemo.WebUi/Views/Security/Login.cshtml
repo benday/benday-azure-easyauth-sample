@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+@functions
+{
+    private string GetPostLoginRedirectUri()
+    {
+        if (this.Context.Request.Query.ContainsKey("ReturnUrl") == false)
+        {
+            return "/";
+        }
+        else
+        {
+            return this.Context.Request.Query["ReturnUrl"];
+        }
+    }
+}
+
+<h2>Login</h2>
+
+<h3>You're not logged in.</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <ul>
+            <li><a href="/.auth/login/microsoftaccount?post_login_redirect_uri=@GetPostLoginRedirectUri()">Microsoft Account</a></li>            
+        </ul>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

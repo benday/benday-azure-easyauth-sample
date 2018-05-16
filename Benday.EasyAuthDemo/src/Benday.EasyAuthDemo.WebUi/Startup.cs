@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Benday.EasyAuthDemo.WebUi.Security;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Benday.EasyAuthDemo.WebUi
 {
@@ -21,7 +26,33 @@ namespace Benday.EasyAuthDemo.WebUi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddMvc();
+
+            // ConfigureSecurity(services);
+        }
+
+        private void ConfigureSecurity(IServiceCollection services)
+        {
+            services.AddSingleton<IAuthorizationHandler, LoggedInUsingEasyAuthHandler>();
+
+            services.AddAuthentication(
+                CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(options =>
+                    {
+                        options.LoginPath = new PathString("/Security/Login");
+                        options.LogoutPath = new PathString("/Security/Logout");
+                    });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(SecurityConstants.Policy_LoggedInUsingEasyAuth,
+                              policy => policy.Requirements.Add(
+                                  new LoggedInUsingEasyAuthRequirement()));
+
+                options.DefaultPolicy = options.GetPolicy(SecurityConstants.Policy_LoggedInUsingEasyAuth);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +68,8 @@ namespace Benday.EasyAuthDemo.WebUi
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

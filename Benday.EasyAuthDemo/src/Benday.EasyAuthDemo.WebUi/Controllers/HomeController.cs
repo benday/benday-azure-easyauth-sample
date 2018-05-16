@@ -15,6 +15,7 @@ namespace Benday.EasyAuthDemo.WebUi.Controllers
             return View();
         }
 
+        // [Microsoft.AspNetCore.Authorization.Authorize]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
