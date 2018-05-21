@@ -13,7 +13,7 @@ namespace Benday.EasyAuthDemo.WebUi.Controllers
         public IActionResult Index()
         {
             var model = new SecuritySummaryViewModel();
-
+            
             var principal = this.User;
 
             var identity = User.Identity;
@@ -35,7 +35,17 @@ namespace Benday.EasyAuthDemo.WebUi.Controllers
 
             model.Cookies = this.Request.Cookies;
 
+            PopulateUserInfo(model);
+
             return View(model);
+        }
+
+        private void PopulateUserInfo(SecuritySummaryViewModel model)
+        {
+            model.IsLoggedIn = "(not implemented)";
+            model.FirstName = "(not implemented)";
+            model.LastName = "(not implemented)";
+            model.EmailAddress = "(not implemented)";
         }
     }
 }
