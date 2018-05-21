@@ -28,6 +28,10 @@ namespace Benday.EasyAuthDemo.WebUi
         {
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            services.AddTransient<PopulateClaimsMiddleware>();
+
+            services.AddTransient<IUserInformation, UserInformation>();
+
             services.AddMvc();
 
             ConfigureAuthentication(services);
@@ -74,6 +78,8 @@ namespace Benday.EasyAuthDemo.WebUi
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UsePopulateClaimsMiddleware();
 
             app.UseMvc(routes =>
             {

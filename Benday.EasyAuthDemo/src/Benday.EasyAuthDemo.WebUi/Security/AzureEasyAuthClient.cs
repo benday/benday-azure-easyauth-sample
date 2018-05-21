@@ -26,42 +26,42 @@ namespace Benday.EasyAuthDemo.WebUi.Security
             private set;
         }
 
-        private void TryInitializeHttpClientUsingSessionCookie(HttpRequest request)
-        {
-            var requestCookies = request.Cookies;
+private void TryInitializeHttpClientUsingSessionCookie(HttpRequest request)
+{
+    var requestCookies = request.Cookies;
 
-            if (requestCookies.ContainsKey(SecurityConstants.Cookie_AppServiceAuthSession) == false)
-            {
-                IsReadyForAuthenticatedCall = false;
-            }
-            else
-            {
-                var handler = new HttpClientHandler();
+    if (requestCookies.ContainsKey(SecurityConstants.Cookie_AppServiceAuthSession) == false)
+    {
+        IsReadyForAuthenticatedCall = false;
+    }
+    else
+    {
+        var handler = new HttpClientHandler();
 
-                var client = new HttpClient(handler);
+        var client = new HttpClient(handler);
 
-                var baseUrl = $"{request.Scheme}://{request.Host}";
+        var baseUrl = $"{request.Scheme}://{request.Host}";
 
-                client.BaseAddress = new Uri(baseUrl);
+        client.BaseAddress = new Uri(baseUrl);
 
-                var container = new CookieContainer();
+        var container = new CookieContainer();
 
-                handler.CookieContainer = container;
+        handler.CookieContainer = container;
 
-                var authCookie =
-                    requestCookies[SecurityConstants.Cookie_AppServiceAuthSession];
+        var authCookie =
+            requestCookies[SecurityConstants.Cookie_AppServiceAuthSession];
 
-                container.Add(
-                    new Uri(baseUrl),
-                    new Cookie(
-                        SecurityConstants.Cookie_AppServiceAuthSession,
-                        authCookie));
+        container.Add(
+            new Uri(baseUrl),
+            new Cookie(
+                SecurityConstants.Cookie_AppServiceAuthSession,
+                authCookie));
 
-                IsReadyForAuthenticatedCall = true;
+        IsReadyForAuthenticatedCall = true;
 
-                _Client = client;
-            }
-        }
+        _Client = client;
+    }
+}
 
         public string GetUserInformationJson()
         {

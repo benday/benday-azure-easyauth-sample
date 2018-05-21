@@ -4,16 +4,30 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Benday.EasyAuthDemo.WebUi.Models;
+using Benday.EasyAuthDemo.WebUi.Security;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Benday.EasyAuthDemo.WebUi.Controllers
 {
     public class SecuritySummaryController : Controller
     {
+        private IUserInformation _UserInfo;
+
+        public SecuritySummaryController(IUserInformation userInfo)
+        {
+            if (userInfo == null)
+            {
+                throw new ArgumentNullException(nameof(userInfo),
+                    $"{nameof(userInfo)} is null.");
+            }
+
+            _UserInfo = userInfo;
+        }
+
         public IActionResult Index()
         {
             var model = new SecuritySummaryViewModel();
-            
+
             var principal = this.User;
 
             var identity = User.Identity;
@@ -42,10 +56,10 @@ namespace Benday.EasyAuthDemo.WebUi.Controllers
 
         private void PopulateUserInfo(SecuritySummaryViewModel model)
         {
-            model.IsLoggedIn = "(not implemented)";
-            model.FirstName = "(not implemented)";
-            model.LastName = "(not implemented)";
-            model.EmailAddress = "(not implemented)";
+            model.IsLoggedIn = _UserInfo.IsLoggedIn.ToString();
+            model.FirstName = _UserInfo.FirstName;
+            model.LastName = _UserInfo.LastName;
+            model.EmailAddress = _UserInfo.EmailAddress;
         }
     }
 }
