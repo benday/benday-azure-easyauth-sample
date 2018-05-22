@@ -11,5 +11,7 @@ namespace Benday.EasyAuthDemo.WebUi.Security
         public const string Claim_X_MsClientPrincipalName = "X-MS-CLIENT-PRINCIPAL-NAME";
         public const string Policy_LoggedInUsingEasyAuth = "LoggedInUsingEasyAuthHandler";
         public const string Cookie_AppServiceAuthSession = "AppServiceAuthSession";
+
+        public const string Idp_DevelopmentMode = "DevelopmentMode";
     }
 }

@@ -1,20 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Login";
-}
+﻿@model Benday.EasyAuthDemo.WebUi.Models.SecurityLoginModel
 
-@functions
-{
-    private string GetPostLoginRedirectUri()
-    {
-        if (this.Context.Request.Query.ContainsKey("ReturnUrl") == false)
-        {
-            return "/";
-        }
-        else
-        {
-            return this.Context.Request.Query["ReturnUrl"];
-        }
-    }
+@{
+    ViewData["Title"] = "Login";
 }
 
 <h2>Login</h2>
@@ -24,9 +11,13 @@
 <div class="row">
     <div class="col-md-4">
         <ul>
-            <li><a href="/.auth/login/microsoftaccount?post_login_redirect_uri=@GetPostLoginRedirectUri()">
-                Microsoft Account</a></li>            
-        </ul>
+            @foreach (var item in Model.LoginTypes)
+            {
+                <li>
+                    <a href="@item.Value">@item.Key</a>
+                </li>
+            }
+        </ul>       
     </div>
 </div>
 

@@ -32,6 +32,8 @@ namespace Benday.EasyAuthDemo.WebUi
 
             services.AddTransient<IUserInformation, UserInformation>();
 
+            services.AddTransient<ISecurityConfiguration, SecurityConfiguration>();
+
             services.AddMvc();
 
             ConfigureAuthentication(services);

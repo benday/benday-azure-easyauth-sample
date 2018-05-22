@@ -11,18 +11,68 @@ namespace Benday.EasyAuthDemo.WebUi.Security
 {
     public class PopulateClaimsMiddleware : IMiddleware
     {
+        private ISecurityConfiguration _Configuration;
+
+        public PopulateClaimsMiddleware(ISecurityConfiguration configuration)
+        {
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration), $"{nameof(configuration)} is null.");
+            }
+
+            _Configuration = configuration;
+        }
+
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             List<Claim> claims = new List<Claim>();
 
+            if (_Configuration.DevelopmentMode == true &&
+                context.User != null &&
+                context.User.Claims != null && 
+                context.User.Claims.GetClaimValue(
+                    SecurityConstants.Claim_X_MsClientPrincipalIdp) == 
+                    SecurityConstants.Idp_DevelopmentMode)
+            {
+                ProcessDevelopmentModeClaims(context, claims);
+            }
+            else
+            {
+                ProcessNonDevelopmentModeClaims(context, claims);
+            }
+
+            await next(context);
+        }
+
+        private void ProcessNonDevelopmentModeClaims(
+            HttpContext context, List<Claim> claims)
+        {
             AddClaimsFromHeader(context, claims);
             AddClaimsFromAuthMeService(context, claims);
 
             var identity = new ClaimsIdentity(claims);
 
             context.User = new System.Security.Claims.ClaimsPrincipal(identity);
+        }
 
-            await next(context);
+        private void ProcessDevelopmentModeClaims(
+            HttpContext context, List<Claim> claims)
+        {
+            if (context.User != null &&
+                    context.User.Identity != null &&
+                    context.User.Identity.IsAuthenticated == true)
+            {
+                // copy the existing claims
+                claims.AddRange(context.User.Claims);
+
+                AddClaim(claims, ClaimTypes.GivenName, "Testy");
+                AddClaim(claims, ClaimTypes.Surname, "McTestface");
+                AddClaim(claims, ClaimTypes.Email, "testy@testface.org");
+
+                var identity = new ClaimsIdentity(claims);
+
+                context.User = new System.Security.Claims.ClaimsPrincipal(identity);
+            }
         }
 
         private void AddClaimsFromAuthMeService(

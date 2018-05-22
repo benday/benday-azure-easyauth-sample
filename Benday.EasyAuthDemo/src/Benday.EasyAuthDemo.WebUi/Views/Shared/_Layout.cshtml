@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject Benday.EasyAuthDemo.WebUi.Security.IUserInformation _UserInformation
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -34,6 +36,15 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a asp-area="" asp-controller="SecuritySummary" asp-action="Index">Security Summary</a></li>
+                    @if (_UserInformation.IsLoggedIn == false)
+                    {
+                        <li class="nav-item"><a asp-area="" asp-controller="Security" asp-action="Login">Login</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a asp-area="" asp-controller="Security" asp-action="Logout">Logout</a></li>
+                        <li class="navbar-text">Hi, @_UserInformation.FirstName</li>
+                    }
                 </ul>
             </div>
         </div>

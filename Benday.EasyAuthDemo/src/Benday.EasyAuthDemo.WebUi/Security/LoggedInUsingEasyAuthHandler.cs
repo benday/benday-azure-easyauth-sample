@@ -9,27 +9,14 @@ namespace Benday.EasyAuthDemo.WebUi.Security
 {
     public class LoggedInUsingEasyAuthHandler : AuthorizationHandler<LoggedInUsingEasyAuthRequirement>
     {
-        private IHttpContextAccessor _Accessor;
-
-        public LoggedInUsingEasyAuthHandler(IHttpContextAccessor accessor)
-        {
-            if (accessor == null)
-            {
-                throw new ArgumentNullException(nameof(accessor), $"{nameof(accessor)} is null.");
-            }
-
-            _Accessor = accessor;
-        }
-
         protected override Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
             LoggedInUsingEasyAuthRequirement requirement)
         {
-            var identityProviderHeader =
-                GetHeaderValue(_Accessor.HttpContext,
-                SecurityConstants.Claim_X_MsClientPrincipalIdp);
+            var identityProviderClaim =
+                FindClaim(context, SecurityConstants.Claim_X_MsClientPrincipalIdp);
 
-            if (identityProviderHeader == null)
+            if (identityProviderClaim == null)
             {
                 // not logged in
                 context.Fail();
@@ -42,11 +29,11 @@ namespace Benday.EasyAuthDemo.WebUi.Security
             return Task.CompletedTask;
         }
 
-        private string GetHeaderValue(HttpContext context, string headerName)
+        private Claim FindClaim(AuthorizationHandlerContext context, string claimName)
         {
-            var match = (from temp in context.Request.Headers
-                         where temp.Key == headerName
-                         select temp.Value).FirstOrDefault();
+            var match = context.User.Claims.Where(
+                 x => x.Type == claimName
+                 ).FirstOrDefault();
 
             return match;
         }
