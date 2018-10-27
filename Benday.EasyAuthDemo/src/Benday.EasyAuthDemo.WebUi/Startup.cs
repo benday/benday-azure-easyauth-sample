@@ -77,6 +77,8 @@ namespace Benday.EasyAuthDemo.WebUi
 
         void RegisterTypes(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddTransient<IUserInformation, UserInformation>();
 
             services.AddTransient<ISecurityConfiguration, SecurityConfiguration>();
