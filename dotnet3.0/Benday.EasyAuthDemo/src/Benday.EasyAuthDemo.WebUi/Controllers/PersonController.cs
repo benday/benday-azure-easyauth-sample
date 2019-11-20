@@ -16,7 +16,7 @@ using Benday.EasyAuthDemo.Api.Security;
 
 namespace Benday.EasyAuthDemo.WebUi.Controllers
 {
-    [Authorize(Policy = SecurityConstants.Policy_LoggedInUsingEasyAuth)]
+
     public class PersonController : Controller
     {
         private readonly IValidatorStrategy<PersonEditorViewModel> _Validator;
@@ -71,6 +71,7 @@ namespace Benday.EasyAuthDemo.WebUi.Controllers
             return RedirectToAction("Edit", new { id = ApiConstants.UnsavedId });
         }
 
+        [Authorize(Policy = SecurityConstants.Policy_LoggedInUsingEasyAuth)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -136,6 +137,7 @@ namespace Benday.EasyAuthDemo.WebUi.Controllers
             return toValues;
         }
 
+        [Authorize(Policy = SecurityConstants.Policy_LoggedInUsingEasyAuth)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PersonEditorViewModel item)
