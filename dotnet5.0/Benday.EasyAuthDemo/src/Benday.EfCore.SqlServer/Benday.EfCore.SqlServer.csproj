@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <!-- <PackageReference Include="Benday.Common" Version="4.0.0" /> -->
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Benday.Common\Benday.Common.csproj" />
+    </ItemGroup>
+</Project>
