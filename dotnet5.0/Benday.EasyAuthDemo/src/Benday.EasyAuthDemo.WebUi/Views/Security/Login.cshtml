@@ -1,0 +1,26 @@
+﻿@model Benday.EasyAuthDemo.WebUi.Models.SecurityLoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<h3>You're not logged in.</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <ul>
+            @foreach (var item in Model.LoginTypes)
+            {
+                <li>
+                    <a href="@item.Value">@item.Key</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
