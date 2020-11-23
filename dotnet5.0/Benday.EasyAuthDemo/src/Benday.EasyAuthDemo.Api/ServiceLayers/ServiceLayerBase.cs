@@ -17,24 +17,30 @@ namespace Benday.EasyAuthDemo.Api.ServiceLayers
             _UsernameProvider = usernameProvider;
         }
 
-        protected void PopulateAuditFieldsBeforeSave(DomainModelBase toValue)
+        protected virtual void BeforeReturnFromGet(T returnValue)
         {
-            if (toValue == null)
-            {
-                throw new ArgumentNullException(nameof(toValue), $"{nameof(toValue)} is null.");
-            }
 
-            if (toValue.Id == 0)
-            {
-                toValue.CreatedBy = _UsernameProvider.GetUsername();
-                toValue.CreatedDate = DateTime.UtcNow;
-            }
-
-            toValue.LastModifiedBy = _UsernameProvider.GetUsername();
-            toValue.LastModifiedDate = DateTime.UtcNow;
         }
 
-        protected void PopulateFieldsFromEntityAfterSave(
+        protected virtual void BeforeReturnFromGet(IList<T> returnValues)
+        {
+
+        }
+
+        protected virtual void PopulateAuditFieldsBeforeSave(T toValue)
+        {
+            OnPopulateAuditFieldsBeforeSave(toValue);
+        }
+
+        protected virtual void OnPopulateAuditFieldsBeforeSave(T toValue)
+        {
+        }
+
+        protected virtual void PopulateAuditFieldsBeforeSave(DomainModelBase toValue)
+        {
+        }
+
+        protected virtual void PopulateFieldsFromEntityAfterSave(
             List<EntityBase> fromValues, List<DomainModelBase> toValues)
         {
             if (fromValues == null)
@@ -55,25 +61,13 @@ namespace Benday.EasyAuthDemo.Api.ServiceLayers
             for (int index = 0; index < fromValues.Count; index++)
             {
                 PopulateFieldsFromEntityAfterSave(
-                    fromValues[index],
-                    toValues[index]);
+                fromValues[index],
+                toValues[index]);
             }
         }
 
-        protected void PopulateAuditFieldsBeforeSave(
-            List<DomainModelBase> values)
-        {
-            if (values != null)
-            {
-                foreach (var item in values)
-                {
-                    PopulateAuditFieldsBeforeSave(item);
-                }
-            }
-        }
-
-        protected void PopulateFieldsFromEntityAfterSave(
-            DataAccess.Entities.EntityBase fromValue, DomainModelBase toValue)
+        protected virtual void PopulateFieldsFromEntityAfterSave(
+            EntityBase fromValue, DomainModelBase toValue)
         {
             if (fromValue == null)
             {
@@ -86,11 +80,6 @@ namespace Benday.EasyAuthDemo.Api.ServiceLayers
             }
 
             toValue.Id = fromValue.Id;
-            toValue.LastModifiedDate = fromValue.LastModifiedDate;
-            toValue.LastModifiedBy = fromValue.LastModifiedBy;
-
-            toValue.CreatedDate = fromValue.CreatedDate;
-            toValue.CreatedBy = fromValue.CreatedBy;
         }
     }
 }

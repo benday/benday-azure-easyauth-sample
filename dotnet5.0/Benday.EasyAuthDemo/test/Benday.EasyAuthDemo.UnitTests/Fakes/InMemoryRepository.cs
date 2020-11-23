@@ -37,13 +37,13 @@ namespace Benday.EasyAuthDemo.UnitTests.Fakes
             return Items;
         }
 
-		public IList<T> GetAll(int maxNumberOfResults)
+        public IList<T> GetAll(int maxNumberOfResults, bool noIncludes)
         {
             _WasGetAllCalled = true;
 
             return Items;
         }
-				
+
         private bool _WasGetByIdCalled;
         public bool WasGetByIdCalled
         {
@@ -87,7 +87,14 @@ namespace Benday.EasyAuthDemo.UnitTests.Fakes
                 Items.Add(saveThis);
             }
 
+            OnSave(saveThis);
+
             SaveAttributes(saveThis);
+        }
+
+        protected virtual void OnSave(T saveThis)
+        {
+
         }
 
         private void SaveAttributes(T saveThis)
@@ -150,7 +157,7 @@ namespace Benday.EasyAuthDemo.UnitTests.Fakes
             _WasSaveCalled = false;
         }
 
-		public SearchResult<T> Search(Search search)
+        public SearchResult<T> Search(Search search)
         {
             throw new NotImplementedException();
         }

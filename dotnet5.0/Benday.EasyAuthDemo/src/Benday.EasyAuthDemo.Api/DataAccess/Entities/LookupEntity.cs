@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Benday.EasyAuthDemo.Api.DataAccess.Entities
 {
     [Table("Lookup")]
-    public class LookupEntity : EntityBase
+    public class LookupEntity : CoreFieldsEntityBase
     {
         [Column(Order = 1)]
         [Required]
