@@ -1,0 +1,112 @@
+@model Benday.EasyAuthDemo.WebUi.Models.LookupEditorViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Lookup Editor</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+		<div class="form-group">
+    @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DisplayFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+	@Html.HiddenFor(model => model.Id)
+</div>
+<div class="form-group">
+
+    @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    <label asp-for="LookupType" class="control-label col-md-2"></label>
+	<div class="col-md-10">
+		<select asp-for="LookupType" asp-items="Model.LookupTypes" class="form-control"></select>
+		<span asp-validation-for="LookupType" class="text-danger"></span>
+	</div>
+</div>
+<div class="form-group">
+
+    @Html.LabelFor(model => model.LookupKey, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.LookupKey, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.LookupKey, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+
+    @Html.LabelFor(model => model.LookupValue, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.LookupValue, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.LookupValue, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    <label asp-for="Status" class="control-label col-md-2"></label>
+	<div class="col-md-10">
+		<select asp-for="Status" asp-items="Model.Statuses" class="form-control"></select>
+		<span asp-validation-for="Status" class="text-danger"></span>
+	</div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DisplayFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+	@Html.HiddenFor(model => model.CreatedBy)
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DisplayFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+	@Html.HiddenFor(model => model.CreatedDate)
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.LastModifiedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DisplayFor(model => model.LastModifiedBy, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+	@Html.HiddenFor(model => model.LastModifiedBy)
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.LastModifiedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DisplayFor(model => model.LastModifiedDate, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+	@Html.HiddenFor(model => model.LastModifiedDate)
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Timestamp, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DisplayFor(model => model.Timestamp, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+	@Html.HiddenFor(model => model.Timestamp)
+</div>
+
+        
+		<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default btn-primary mx-2" />
+				<input type="button" class="btn btn-secondary mx-2" value="Cancel" onclick="location.href='@Url.Action("Index")'" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

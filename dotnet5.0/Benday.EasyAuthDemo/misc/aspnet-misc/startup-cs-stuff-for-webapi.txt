@@ -1,0 +1,35 @@
+        void RegisterTypes(IServiceCollection services)
+        {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddDbContext<EasyAuthDemoDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("default")));
+
+            services.AddTransient<IEasyAuthDemoDbContext, EasyAuthDemoDbContext>();
+
+            services.AddTransient<IUsernameProvider, HttpContextUsernameProvider>();
+            services.AddTransient<ISearchStringParserStrategy, DefaultSearchStringParserStrategy>();
+
+            // service layers
+			services.AddTransient<IPersonService, PersonService>();
+services.AddTransient<IServiceLayer<Benday.EasyAuthDemo.Api.DomainModels.Person>, PersonService>();
+services.AddTransient<ILookupService, LookupService>();
+services.AddTransient<IServiceLayer<Benday.EasyAuthDemo.Api.DomainModels.Lookup>, LookupService>();
+
+
+			// validators
+			services.AddTransient<
+	IValidatorStrategy<Benday.EasyAuthDemo.Api.DomainModels.Person>, 
+	DefaultValidatorStrategy<Benday.EasyAuthDemo.Api.DomainModels.Person>>();
+services.AddTransient<
+	IValidatorStrategy<Benday.EasyAuthDemo.Api.DomainModels.Lookup>, 
+	DefaultValidatorStrategy<Benday.EasyAuthDemo.Api.DomainModels.Lookup>>();
+
+
+			// repositories
+			services.AddTransient<ISearchableRepository<Benday.EasyAuthDemo.Api.DataAccess.Entities.PersonEntity>, SqlEntityFrameworkPersonRepository>();
+services.AddTransient<
+	Benday.EasyAuthDemo.Api.DataAccess.SqlServer.ILookupRepository,
+	SqlEntityFrameworkLookupRepository>();
+
+        }

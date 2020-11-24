@@ -1,0 +1,110 @@
+﻿@model SecuritySummaryModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Claims Summary</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Issuer
+        </th>
+
+
+        <th>
+            Type
+        </th>
+        <th>
+            Value
+        </th>
+        <th>
+            Value Type
+        </th>
+        @*<th>
+                Subject
+            </th>*@
+
+    </tr>
+
+    @foreach (var item in Model.Claims)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Issuer)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValueType)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>*@
+        </tr>
+    }
+
+
+
+</table>
+
+<h2>Header Summary</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Key
+        </th>
+        <th>
+            Value
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Headers)
+    {
+        <tr>
+            <td>
+                @item.Key
+            </td>
+            <td>
+                @item.Value
+            </td>
+        </tr>
+    }
+
+</table>
+
+<h2>Cookie Summary</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Key
+        </th>
+        <th>
+            Value
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Cookies)
+    {
+        <tr>
+            <td>
+                @item.Key
+            </td>
+            <td>
+                @item.Value
+            </td>
+        </tr>
+    }
+
+</table>
+

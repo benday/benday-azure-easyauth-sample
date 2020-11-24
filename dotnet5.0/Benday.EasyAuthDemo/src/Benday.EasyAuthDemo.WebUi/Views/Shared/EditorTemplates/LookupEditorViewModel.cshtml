@@ -1,0 +1,27 @@
+@model Benday.EasyAuthDemo.WebUi.Models.LookupEditorViewModel
+<tr>
+@Html.HiddenFor(model => model.Id)
+<td>
+    @Html.EditorFor(model => model.DisplayOrder)
+</td>
+<td>
+    @Html.EditorFor(model => model.LookupType)
+</td>
+<td>
+    @Html.EditorFor(model => model.LookupKey)
+</td>
+<td>
+    @Html.EditorFor(model => model.LookupValue)
+</td>
+@Html.HiddenFor(model => model.Status)
+@Html.HiddenFor(model => model.CreatedBy)
+@Html.HiddenFor(model => model.CreatedDate)
+@Html.HiddenFor(model => model.LastModifiedBy)
+@Html.HiddenFor(model => model.LastModifiedDate)
+@Html.HiddenFor(model => model.Timestamp)
+<td>
+            @Html.ActionLink("Edit", "Edit", "Lookup", new { id=Model.Id }) |
+            @Html.ActionLink("Details", "Details", "Lookup", new { id=Model.Id }) |
+            @Html.ActionLink("Delete", "Delete", "Lookup", new { id=Model.Id })
+        </td>
+</tr>
