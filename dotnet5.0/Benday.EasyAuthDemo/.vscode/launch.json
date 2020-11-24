@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Benday.EasyAuthDemo.WebApi/bin/Debug/netcoreapp3.0/Benday.EasyAuthDemo.WebApi.dll",
+            "program": "${workspaceFolder}/src/Benday.EasyAuthDemo.WebUi/bin/Debug/net5.0/Benday.EasyAuthDemo.WebUi.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Benday.EasyAuthDemo.WebApi",
+            "cwd": "${workspaceFolder}/src/Benday.EasyAuthDemo.WebUi",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {

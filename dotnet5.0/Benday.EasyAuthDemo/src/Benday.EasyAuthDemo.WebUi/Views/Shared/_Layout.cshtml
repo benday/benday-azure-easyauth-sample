@@ -1,21 +1,40 @@
 ﻿@inject Benday.EasyAuthDemo.Api.Security.IUserInformation _UserInformation
+@inject Microsoft.Extensions.Configuration.IConfiguration _Configuration
+
+@functions {
+    private string GetVersionMessage()
+    {
+        var value = _Configuration["VersionMessage"];
+
+        if (value == null)
+        {
+            return "(not set)";
+        }
+        else
+        {
+            return value;
+        }
+    }
+}
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EasyAuthDemo</title>
+    <title>@ViewData["Title"] - Azure App Service Security Demo</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Easy Auth Demo</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">App Service Security Demo</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
@@ -25,21 +44,26 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Person" asp-action="Index">person</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Person"
+                                asp-action="Index">person</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Lookup" asp-action="Index">lookup</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Lookup"
+                                asp-action="Index">lookup</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SecuritySummary" asp-action="Index">security summary</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SecuritySummary"
+                                asp-action="Index">security summary</a>
                         </li>
                         @if (_UserInformation.IsLoggedIn == false)
                         {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Security" asp-action="Login">login</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Security"
+                                    asp-action="Login">login</a></li>
                         }
                         else
                         {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Security" asp-action="Logout">logout</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Security"
+                                    asp-action="Logout">logout</a></li>
                             <li class="navbar-text"><i>Hi, @_UserInformation.FirstName</i></li>
                         }
                     </ul>
@@ -55,7 +79,8 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - Benday.EasyAuthDemo.WebUi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - Benjamin Day Consulting, Inc. | <a href="https://www.benday.com">www.benday.com</a> | <a
+                href="https://www.github.com/benday-inc">github repos</a> | <i>Deployed: @(GetVersionMessage())</i>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -63,4 +88,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
+
 </html>

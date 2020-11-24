@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Benday.EasyAuthDemo.WebApi/Benday.EasyAuthDemo.WebApi.csproj",
+                "${workspaceFolder}/src/Benday.EasyAuthDemo.WebUi/Benday.EasyAuthDemo.WebUi.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -23,7 +23,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Benday.EasyAuthDemo.WebApi/Benday.EasyAuthDemo.WebApi.csproj",
+                "${workspaceFolder}/src/Benday.EasyAuthDemo.WebUi/Benday.EasyAuthDemo.WebUi.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -36,7 +36,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/Benday.EasyAuthDemo.WebApi/Benday.EasyAuthDemo.WebApi.csproj",
+                "${workspaceFolder}/src/Benday.EasyAuthDemo.WebUi/Benday.EasyAuthDemo.WebUi.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

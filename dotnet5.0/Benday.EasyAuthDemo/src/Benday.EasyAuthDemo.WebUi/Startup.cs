@@ -37,9 +37,10 @@ namespace Benday.EasyAuthDemo.WebUi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             RegisterTypes(services);
 
@@ -83,7 +84,7 @@ namespace Benday.EasyAuthDemo.WebUi
 
             services.AddSingleton<IAuthorizationHandler, LoggedInUsingEasyAuthHandler>();
 
-            
+
             services.AddDbContext<EasyAuthDemoDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("default")));
 
@@ -127,7 +128,7 @@ namespace Benday.EasyAuthDemo.WebUi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -141,9 +142,9 @@ namespace Benday.EasyAuthDemo.WebUi
             app.UseRouting();
 
             app.UseAuthentication();
-            
+
             app.UsePopulateClaimsMiddleware();
-            
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
